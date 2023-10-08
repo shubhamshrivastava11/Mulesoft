@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: Accounts-SAPI
+version: v1
+protocols: [HTTP, HTTPS]
+mediaType: [application/json] 
+description : System API for Account Management 
+baseUri: /api{version}
+
+types: 
+ Account: !include types/dataTypes.raml
+      
+
+/account:
+  get:
+    description: Retrieve customer accounts
+    queryParameters:
+      requester:
+        description: The person or system requesting the data
+        type: string
+      accountType:
+        description: Optional account type (personal or business)
+        type: string
+        required: false
+      customerName:
+        description: Optional customer name to filter accounts
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include example/firstExample.raml
+
+  post:
+    description: Create customer accounts
+    body:
+      application/json:
+        example: !include example/accountExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: Accounts created
